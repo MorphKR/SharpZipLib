@@ -42,7 +42,12 @@ namespace ICSharpCode.SharpZipLib.Tar
 				{
 					Flush();
 					headerParts[state] = sb.ToString();
+
+					#if NET35
+					sb.Length = 0;	
+					#else
 					sb.Clear();
+					#endif
 
 					if (++state == END)
 					{

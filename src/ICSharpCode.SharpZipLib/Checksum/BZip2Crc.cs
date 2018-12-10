@@ -172,10 +172,18 @@ namespace ICSharpCode.SharpZipLib.Checksum
 		/// </param>
 		public void Update(ArraySegment<byte> segment)
 		{
+			#if NET45
 			foreach (byte b in segment)
 			{
 				Update(b);
 			}
+			#elif NET35
+
+			for (int i = segment.Offset; i < segment.Count; i++)
+			{
+				Update(segment.Array[i]);
+			}
+			#endif
 		}
 	}
 }
